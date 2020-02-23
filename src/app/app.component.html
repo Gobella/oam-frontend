@@ -1,21 +1,54 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+    <div class="logo">OAM</div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item>
+        <span><i nz-icon nzType="dot-chart" nzTheme="outline"></i><span class="nav-text">DashBoard</span></span>
+      </li>
+      <li nz-submenu>
+        <span title><i nz-icon nzType="database" nzTheme="outline"></i><span class="nav-text">镜像中心</span></span>
+        <ul>
+          <li nz-menu-item (click)="redictTo('image/view')"><i nz-icon nzType="eye" nzTheme="outline"></i>镜像预览</li>
+          <li nz-menu-item><i nz-icon nzType="plus" nzTheme="outline"></i>镜像发布</li>
+        </ul>
+      </li>
+      <li nz-submenu>
+        <span title><i nz-icon nzType="appstore" nzTheme="outline"></i><span class="nav-text">应用管理</span></span>
+        <ul>
+          <li nz-menu-item (click)="redictTo('app/view')"><i nz-icon nzType="eye" nzTheme="outline"></i>应用预览</li>
+          <li nz-menu-item (click)="redictTo('app/change')"><i nz-icon nzType="build" nzTheme="outline"></i>上线变更</li>
+          <li nz-menu-item (click)="redictTo('app/sheets')"><i nz-icon nzType="block" nzTheme="outline"></i>操作单</li>
+        </ul>
+      </li>
+      <li nz-submenu>
+        <span title><i nz-icon nzType="control" nzTheme="outline"></i><span class="nav-text">Traits 管理</span></span>
+        <ul>
+          <li nz-menu-item><i nz-icon nzType="plus" nzTheme="outline"></i>新增 Traits</li>
+          <li nz-menu-item (click)="redictTo('trait/view')"><i nz-icon nzType="eye" nzTheme="outline"></i>Traits 预览</li>
+          <li nz-menu-item><i nz-icon nzType="file-search" nzTheme="outline"></i>服务发现</li>
+        </ul>
+      </li>
+      <li nz-menu-item  (click)="redictTo('resource/view')">
+        <span><i nz-icon nzType="cloud-server" nzTheme="outline"></i><span class="nav-text">资源管理</span></span>
+      </li>
+      <li nz-menu-item>
+        <span><i nz-icon nzType="monitor" nzTheme="outline"></i><span class="nav-text">监控</span></span>
+      </li>
+      <li nz-menu-item>
+        <span><i nz-icon nzType="question" nzTheme="outline"></i><span class="nav-text">HELP</span></span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header style="background: #fff; padding:0;">
+      <i class="trigger" nz-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
+    </nz-header>
+    <nz-content style="margin:0 16px; height: 100%; padding: 0 0 0; box-sizing: border-box ; ">
+      <router-outlet style="min-height: 707px;"></router-outlet>
+    </nz-content>
+    <nz-footer style="text-align: center;">OAM Design ©2020 Implement By caili</nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #trigger>
+  <i nz-icon type="up"></i>
+</ng-template>

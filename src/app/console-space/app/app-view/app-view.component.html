@@ -1,0 +1,87 @@
+<nz-breadcrumb style="margin:16px 0;">
+  <nz-breadcrumb-item>应用管理</nz-breadcrumb-item>
+  <nz-breadcrumb-item>应用预览</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:14px; min-height: 605px">
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="6">
+      <nz-card style="width:250px;" [nzActions]="[actionSetting, actionEdit]">
+        <nz-card-meta nzTitle="飞猪" nzDescription="Web，假数据勿点" [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <ng-template #avatarTemplate>
+          <nz-avatar nzText="APP" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </ng-template>
+        <ng-template #actionSetting>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #actionEdit>
+          <i nz-icon type="edit"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6" *ngFor="let item of applist">
+      <nz-card style="width:250px;" [nzActions]="[actionSetting, actionEdit]">
+        <nz-card-meta [nzTitle]="item.name" [nzDescription]="'这是一个服务'" [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <ng-template #avatarTemplate>
+          <nz-avatar nzText="APP" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </ng-template>
+        <ng-template #actionSetting>
+          <i nz-icon nzType="eye" nzTheme="outline" (click)="showAPP(item)"></i>
+        </ng-template>
+        <ng-template #actionEdit>
+          <i nz-icon type="edit" (click)="showAPP(item)"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-tag class="editable-tag" nzNoAnimation (click)="showCreateModule()" style="width: 250px;height: 143px;padding-left: 114px;padding-top:63px;">
+        <i nz-icon type="plus" style="font-size:20px"></i>
+      </nz-tag>
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="创建模块" (nzOnCancel)="handleCancel()" (nzOnOk)="handleSubmit()">
+  <form nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">应用名</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <input nz-input formControlName="name" id="name">
+        <nz-form-explain>应用名称在本demo中唯一</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>资源信息</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <nz-select formControlName="resourceVersion" nzAllowClear nzPlaceHolder="资源信息">
+          <nz-option [nzValue]="'233232444'" [nzLabel]="'233232444-某APP'"></nz-option>
+        </nz-select>
+        <nz-form-extra>申请的可用资源</nz-form-extra>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>所属空间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <nz-select formControlName="namespace" nzAllowClear nzPlaceHolder="所属空间">
+          <nz-option [nzValue]="'default'" [nzLabel]="'default'"></nz-option>
+        </nz-select>
+        <nz-form-extra>应用所属的命名空间</nz-form-extra>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>部署模式</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <nz-select formControlName="appPublishedMode" nzAllowClear nzPlaceHolder="所属空间">
+          <nz-option [nzValue]="'core.oam.dev/v1alpha1.Server'" [nzLabel]="'core.oam.dev/v1alpha1.Server'"></nz-option>
+          <nz-option [nzValue]="'core.oam.dev/v1alpha1.SingletonServer'" [nzLabel]="'core.oam.dev/v1alpha1.SingletonServer'"></nz-option>
+        </nz-select>
+        <nz-form-extra>应用程序运行方式，涉及后续后端支持方式</nz-form-extra>
+      </nz-form-control>
+    </nz-form-item>
+     <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="port">端口号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <input nz-input formControlName="port" id="port">
+        <nz-form-explain>应用程序访问的端口号</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

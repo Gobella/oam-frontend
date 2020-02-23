@@ -1,0 +1,103 @@
+<nz-breadcrumb style="margin:16px 0;">
+  <nz-breadcrumb-item>应用管理</nz-breadcrumb-item>
+  <nz-breadcrumb-item>应用变更</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:14px; min-height: 605px">
+  <div nz-row>
+    <div nz-col nzSpan="3" style="padding-top: 5px;">
+      <nz-timeline>
+        <nz-timeline-item *ngFor="let item of steps" [nzColor]="item.status==initStatus?'red':'green'">{{item.name}}</nz-timeline-item>
+      </nz-timeline>
+    </div>
+    <div nz-col nzSpan="21" style="background: white;">
+      <form nz-form [formGroup]="validateForm">
+        <nz-card *ngIf="currentStep =='base-config'" nzTitle="应用基础配置">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>选择应用</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+              <nz-select formControlName="app_name" nzAllowClear nzPlaceHolder="资源信息">
+                <nz-option *ngFor="let appObj of applist" [nzValue]="appObj.name" [nzLabel]="appObj.name"></nz-option>
+              </nz-select>
+              <nz-form-extra>选择应用的基础配置</nz-form-extra>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>镜像选择</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+              <nz-select formControlName="image" nzAllowClear nzPlaceHolder="资源信息">
+                <nz-option *ngFor="let image of images" [nzValue]="image" [nzLabel]="image"></nz-option>
+              </nz-select>
+              <nz-form-extra>选择要发布的镜像</nz-form-extra>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>变更类型</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+              <nz-select formControlName="change_type" nzAllowClear nzPlaceHolder="资源信息">
+                <nz-option *ngFor="let type of ChangeTypes" [nzValue]="type.key" [nzLabel]="type.name"></nz-option>
+              </nz-select>
+              <nz-form-extra>选择部署方式</nz-form-extra>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control [nzSpan]="14" [nzOffset]="6">
+              <button nz-button nzType="primary" (click)="next('op-config')">下一步</button>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-card>
+        <nz-card *ngIf="currentStep =='op-config'" nzTitle="应用能力配置">
+          <div nz-row [nzGutter]="6">
+            <div nz-col [nzSpan]="6" *ngFor="let item of traitsList">
+              <nz-card style="width:250px;" [nzActions]="[actionSetting, actionEdit]">
+                <nz-card-meta [nzTitle]="item.name" [nzDescription]="'这是一个 Trait'" [nzAvatar]="avatarTemplate"></nz-card-meta>
+                <ng-template #avatarTemplate>
+                  <nz-avatar nzText="Trait" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+                </ng-template>
+                <ng-template #actionSetting>
+                  <i nz-icon nzType="eye" nzTheme="outline" (click)="showAPP(item)"></i>
+                </ng-template>
+                <ng-template #actionEdit>
+                  <i nz-icon nzType="delete" nzTheme="outline" (click)="deleteTrait(item.name)"></i>
+                </ng-template>
+              </nz-card>
+            </div>
+            <div nz-col [nzSpan]="6">
+              <nz-tag class="editable-tag" nzNoAnimation (click)="showCreateTraits()" style="width: 250px;height: 143px;padding-left: 114px;padding-top:63px;">
+                <i nz-icon type="plus" style="font-size:20px"></i>
+              </nz-tag>
+            </div>
+          </div>
+          <div nz-row style="margin-top: 10px;">
+            <button nz-button nzType="primary" (click)="currentStep = 'base-config'">上一步</button>
+            <button nz-button nzType="primary" (click)="next('deploy')">下一步</button>
+          </div>
+        </nz-card>
+        <nz-card *ngIf="currentStep =='deploy'" nzTitle="应用部署">
+          <div nz-row style="margin-top: 10px;">
+            <button nz-button nzType="primary" (click)="currentStep = 'op-config'">上一步</button>
+            <button nz-button nzType="primary" (click)="handleDeploy()">开始部署</button>
+          </div>
+        </nz-card>
+      </form>
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isCreateTraitsModalShow" nzTitle="创建模块" (nzOnCancel)="handleCancel()" (nzOnOk)="handleSubmit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>选择 Traits 类型</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+      <nz-select nzAllowClear nzPlaceHolder="Traits类型" [ngModel]="editTrait" (ngModelChange)="initTraitEdit($event)" style="width: 200px">
+        <nz-option *ngFor="let trait of traitsEnum" [nzValue]="trait" [nzLabel]="trait.name"></nz-option>
+      </nz-select>
+      <nz-form-extra>选择 Traits 类型，目前traits 由系统提供</nz-form-extra>
+    </nz-form-control>
+  </nz-form-item>
+  <div>
+    <nz-form-item *ngFor="let key of editTraitKeys">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{key}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <input nz-input id="{{key}}" [(ngModel)]="editTrait[key]">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</nz-modal>

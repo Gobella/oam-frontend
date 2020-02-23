@@ -1,0 +1,76 @@
+<nz-breadcrumb style="margin:16px 0;">
+  <nz-breadcrumb-item>Traits管理</nz-breadcrumb-item>
+  <nz-breadcrumb-item>Traits 预览</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:14px; min-height: 605px">
+  <div nz-row [nzGutter]="6">
+    <div nz-col [nzSpan]="6">
+      <nz-card style="width:250px;"  [nzActions]="[actionSetting, actionEdit]">
+        <nz-card-meta nzTitle="manual-scaler(system)" nzDescription="手动伸缩Traits" [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <ng-template #avatarTemplate>
+          <nz-avatar nzText="Scaler" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </ng-template>
+        <ng-template #coverTemplate>
+          <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+        </ng-template>
+        <ng-template #actionSetting>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #actionEdit>
+          <i nz-icon type="edit"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card style="width:250px;" [nzActions]="[actionSetting, actionEdit]">
+        <nz-card-meta nzTitle="auto-scaler(system)" nzDescription="自动伸缩Traits" [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <ng-template #avatarTemplate>
+          <nz-avatar nzText="Scaler" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </ng-template>
+        <ng-template #coverTemplate>
+          <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+        </ng-template>
+        <ng-template #actionSetting>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #actionEdit>
+          <i nz-icon type="edit"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card style="width:250px;" [nzActions]="[actionSetting2, actionEdit2]">
+        <nz-card-meta nzTitle="ingress(system)" nzDescription="负载均衡Trait" [nzAvatar]="avatarTemplate2"></nz-card-meta>
+        <ng-template #avatarTemplate2>
+          <nz-avatar nzText="ingress" style="color:white; background-color:#0f5f71;"></nz-avatar>
+        </ng-template>
+        <ng-template #coverTemplate2>
+          <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+        </ng-template>
+        <ng-template #actionSetting2>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #actionEdit2>
+          <i nz-icon type="edit"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+     <div nz-col [nzSpan]="6">
+      <nz-card style="width:250px;"  [nzActions]="[actionSetting2, actionEdit2]">
+        <nz-card-meta nzTitle="volume-mounter(system)" nzDescription="存储Trait" [nzAvatar]="avatarTemplate3"></nz-card-meta>
+        <ng-template #avatarTemplate3>
+          <nz-avatar nzText="volume" style="color:white; background-color:blue;"></nz-avatar>
+        </ng-template>
+        <ng-template #coverTemplate2>
+          <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+        </ng-template>
+        <ng-template #actionSetting2>
+          <i nz-icon nzType="eye" nzTheme="outline"></i>
+        </ng-template>
+        <ng-template #actionEdit2>
+          <i nz-icon type="edit"></i>
+        </ng-template>
+      </nz-card>
+    </div>
+  </div>
+</div>
